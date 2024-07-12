@@ -43,7 +43,16 @@ def get_url_stats(request, hash):
     except URL.DoesNotExist:
         return Response({'error':'Short URL not found'}, status=404)
     
+@api_view(['GET'])
+def get_all_urls(request):
+    urls = URL.objects.all()
+    serializer = URLSerializer(urls, many=True)
+    return Response({ 'urls' : serializer.data}, status=200)
+        
+
+"""
 def simple_ui(request):
     urls = URL.objects.all()
     
     return render(request, 'index.html', {'urls':urls})
+"""
